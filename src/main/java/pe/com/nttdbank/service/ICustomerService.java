@@ -1,0 +1,17 @@
+package pe.com.nttdbank.service;
+
+import java.util.List;
+
+import pe.com.nttdbank.dto.CustomerDto;
+
+public interface ICustomerService {
+    List<CustomerDto> getAll();
+
+    CustomerDto getById(Long id);
+
+    Boolean Create(CustomerDto customerDto);
+
+    Boolean Edit(Long id, CustomerDto customerDto);
+
+    Boolean Delete(Long id);
+}
