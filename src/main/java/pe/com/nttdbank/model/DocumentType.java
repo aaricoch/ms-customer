@@ -12,7 +12,7 @@ import lombok.Setter;
 public class DocumentType {
     @Id
     @GeneratedValue
-    private Long idDocumentType;
+    private int idDocumentType;
     private String documentTypeName;
 
     public DocumentType() {

@@ -1,76 +1,20 @@
 package pe.com.nttdbank.repository;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.transaction.Transactional;
+import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import pe.com.nttdbank.model.Customer;
 
-@ApplicationScoped
-public class CustomerRepository implements ICustomerRepository {
+public interface CustomerRepository extends PanacheRepository<Customer> {
+    List<Customer> getAll();
 
-    public List<Customer> getAll() {
-        List<Customer> customers = Customer.listAll();
-        // List<Customer> customers = Customer.list("status", StatusType.Active);
-        return customers;
-    }
+    Customer getById(Long id);
 
-    public Customer getById(Long id) {
-        Optional<Customer> customer = Customer.findByIdOptional(id);
-        if (customer.isPresent()){
-            return null;
-        }
-        return customer.get();
-    }
+    Boolean Create(Customer customer);
 
-    @Transactional
-    public Boolean Create(Customer customer) {
-        Boolean result = false;
-        
-        customer.State = 1;
-        customer.AuditCreateUser = 1;
-        customer.AuditCreateDate = new Date();
+    Boolean Edit(Customer customer);
 
-        customer.persist();
-        if (customer.isPersistent()) {
-            result = true;
-        }
+    Boolean Delete(Long id);
 
-        return result;
-    }
-
-    @Transactional
-    public Boolean Edit(Customer customer) {
-        Boolean result = false;
-
-        customer.AuditUpdateUser = 1;
-        customer.AuditUpdateDate = new Date();
-        customer.persist();
-
-        if (customer.isPersistent()) {
-            result = true;
-        }
-
-        return result;
-    }
-
-    @Transactional
-    public Boolean Delete(Long id) {
-        Boolean result = false;
-        Customer customer = getById(id);
-
-        customer.State = 0;
-        customer.AuditDeleteUser = 1;
-        customer.AuditDeleteDate = new Date();
-        customer.persist();
-
-        if (customer.isPersistent()) {
-            result = true;
-        }
-
-        return result;
-    }
-
+    Long CountByDocument(int documentType, String documentNumber);
 }

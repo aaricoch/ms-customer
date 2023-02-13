@@ -17,7 +17,7 @@ import jakarta.ws.rs.core.Response.Status;
 import pe.com.nttdbank.dto.CustomerDto;
 import pe.com.nttdbank.service.CustomerService;
 
-@Path("/customer")
+@Path("/ms-customer/customer")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class CustomerResource {
@@ -36,7 +36,7 @@ public class CustomerResource {
     public Response getById(@PathParam("id") Long Id) {
         CustomerDto customerDto = customerService.getById(Id);
         if (customerDto == null) {
-            Response.status(Status.NOT_FOUND).build();
+            return Response.status(Status.NOT_FOUND).build();
         }
         return Response.ok(customerDto).build();
     }
